@@ -27,7 +27,7 @@ jobs:
     steps:
       - run: |
           echo "cd_api"
-          exit 0
+          exit 1
 
   cd_asana_comment:
     needs: [cd_api, cd_app]
