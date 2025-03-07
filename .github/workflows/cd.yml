@@ -31,7 +31,7 @@ jobs:
 
   cd_asana_comment:
     needs: [cd_api, cd_app]
-    if: ${{ !failure() && !cancelled() }}
+    if: ${{ !failure() && !cancelled() && (success() || contains(needs.*.result, 'skipped')) }}
     runs-on: ubuntu-latest
     steps:
       - run: |
