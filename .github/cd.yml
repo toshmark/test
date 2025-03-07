@@ -1,0 +1,36 @@
+name: CD
+
+on:
+  push:
+    branches: [master, preprod, staging]
+
+jobs:
+  cd_version:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "cd_version"
+
+  cd_api:
+    if: github.ref_name == 'staging' || github.ref_name == 'refs/heads/staging' || github.ref_name == 'master' || github.ref_name == 'refs/heads/master'
+    needs: cd_version
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "cd_api"
+
+  cd_app:
+    if: github.ref_name == 'staging' || github.ref_name == 'refs/heads/staging' || github.ref_name == 'master' || github.ref_name == 'refs/heads/master'
+    needs: cd_version
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "cd_api"
+
+  cd_asana_comment:
+    needs: [cd_api, cd_app]
+    if: ${{ always() && !failure() && !cancelled() }}
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "cd_asana_comment"
