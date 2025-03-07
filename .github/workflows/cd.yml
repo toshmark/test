@@ -27,11 +27,11 @@ jobs:
     steps:
       - run: |
           echo "cd_api"
-          exit 1
+          exit 0
 
   cd_asana_comment:
     needs: [cd_api, cd_app]
-    if: ${{ always() && !failure() && !cancelled() }}
+    if: ${{ success() && !failure() && !cancelled() }}
     runs-on: ubuntu-latest
     steps:
       - run: |
