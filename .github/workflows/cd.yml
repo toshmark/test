@@ -18,6 +18,7 @@ jobs:
     steps:
       - run: |
           echo "cd_api"
+          exit 0
 
   cd_app:
     if: github.ref_name == 'staging' || github.ref_name == 'refs/heads/staging' || github.ref_name == 'master' || github.ref_name == 'refs/heads/master'
@@ -26,6 +27,7 @@ jobs:
     steps:
       - run: |
           echo "cd_api"
+          exit 1
 
   cd_asana_comment:
     needs: [cd_api, cd_app]
